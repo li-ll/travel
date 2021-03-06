@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>收藏排行榜</title>
+    <!-- <link rel="stylesheet" type="text/css" href="css/common.css">-->
+    <script th:src="@{~/static/js/bootstrap.js}"></script>
+    <link rel="stylesheet" th:href="@{~/static/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../static/css/common.css" th:href="@{/css/common.css}"><!--../static-->
+    <link rel="stylesheet" href="../static/css/search.css" th:href="@{/css/search.css}">
+    <link rel="stylesheet" href="../static/css/ranking-list.css" th:href="@{/css/ranking-list.css}">
+    <script th:src="@{~/static/js/jquery-3.3.1.js}"></script>
+</head>
+<body>
+<div th:include="header :: headname"></div>
+<div class="contant">
+    <div class="shaixuan">
+        <span>线路名称</span>
+        <input type="text">
+        <span>金额</span>
+        <input type="text">~<input type="text">
+        <button>搜索</button>
+    </div>
+<div class="list clearfix"  name="page">
+    <ul>
+        <li th:each="route:${page.list}">
+           <span class="num one" th:text="${routeStat.index + 1}">1</span>
+
+            <a th:href="@{/route/findOne(rid=${route.rid})}"><img th:src="@{/}+${route.rimage}"alt=""></a>
+
+            <a th:href="@{/route/findOne(rid=${route.rid})}">
+                <h4 th:text="${route.rname}">【尾单特卖】全国-曼谷6-7天自由行 泰国出境旅游 特价往6-7天自由行 泰国出境旅游 特价往..</h4>
+            </a>
+            <p>
+                <b class="price">&yen;<span  th:text="${route.price}">899</span>起</b>
+                <span class="shouchang" > 已收藏<span th:text=" ${route.count} ">450</span> 次</span>
+            </p>
+        </li>
+
+    </ul>
+  </div>
+    <div class="page_num_inf">
+        <i></i> 共
+        <span id="totalPage" th:text="${page.pages}">12</span>页<span id="totalCount" th:text="${page.total}">132</span>条
+    </div>
+    <div class="col-md-9">
+        <ul  class="pagination">
+            <li><a th:href="@{/route/findByCount(start=0)}">首 页</a></li>
+            <li><a th:href="@{/route/findByCount(start=${page.pageNum-1})}">上一页</a></li>
+            <!--遍历条数-->
+            <li th:each="nav:${page.navigatepageNums}">
+                <a th:href="@{/route/findByCount(start=${nav})}" th:text="${nav}" th:if="${nav != page.pageNum}"></a>
+                <span style="font-weight: bold;background: #6faed9;" th:if="${nav == page.pageNum}" th:text="${nav}"></span>
+            </li>
+
+            <li><a th:href="@{/route/findByCount(start=${page.pageNum+1})}">下一页</a></li>
+            <li><a th:href="@{/route/findByCount(start=${page.pages})}">尾 页</a></li>
+        </ul>
+    </div>
+
+</div>
+</div>
+
+<div th:replace="footer :: footername"></div>
+</body>
+</html>

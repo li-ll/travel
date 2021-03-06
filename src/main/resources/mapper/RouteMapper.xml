@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruo.travel_1.mapper.RouteMapper"><!--namespace随意，一般为-->
+
+    <!--查询分类-->
+    <select id="findAll" resultType="com.ruo.travel_1.domain.Route">
+           select * from tab_route where cid = #{cid}
+    </select>
+
+    <!--查询具体路线-->
+    <select id="findOne" resultType="com.ruo.travel_1.domain.Route">
+            select * from tab_route where rid = #{rid}
+    </select>
+    <!--查询具体路线的图片-->
+    <select id="findByRid" resultType="com.ruo.travel_1.domain.RouteImg">
+            select * from tab_route_img where rid = #{rid}
+    </select>
+    <!--查询商户-->
+    <select id="findById" resultType="com.ruo.travel_1.domain.Seller">
+             select * from tab_seller where sid =#{sid}
+    </select>
+
+    <!--查询收藏-->
+    <select id="findByCount" resultType="com.ruo.travel_1.domain.Route">
+        select * from tab_route where count>50 order by count desc
+    </select>
+
+    <!--模糊查询-->
+    <select id="findByFuzzyQuery" resultType="com.ruo.travel_1.domain.Route" parameterType="string">
+        select * from tab_route
+        <where>
+            <if test="rname!=null and rname!=''">
+                rname like #{rname}
+            </if>
+        </where>
+    </select>
+
+</mapper>

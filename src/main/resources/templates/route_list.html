@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <title>黑马旅游-搜索</title>
+    <script th:src="@{~/static/js/bootstrap.js}"></script>
+    <link rel="stylesheet" th:href="@{~/static/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../static/css/common.css"  th:href="@{/css/common.css}"><!--../static-->
+    <link rel="stylesheet" href="../static/css/search.css" th:href="@{/css/search.css}">
+    <script th:src="@{~/static/js/jquery-3.3.1.js}"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+
+</head>
+<body>
+<div th:include="header :: headname"></div>
+<div class="page_one">
+    <div class="contant">
+        <div class="crumbs">
+            <img th:src="@{~/static/images/search.png}" alt="">
+            <p>黑马旅行><span>搜索结果</span></p>
+        </div>
+
+        <div class="xinxi clearfix">
+            <div class="left">
+                <div class="header">
+                    <span>商品信息</span>
+                    <span class="jg">价格</span>
+                </div>
+                <ul id="route">
+
+                    <li th:each="route:${page.list}">
+                        <div class="img"><img th:src="@{/}+${route.rimage}" alt="" style="width: 299px;"></div>
+                        <div class="text1">
+                            <p th:text="${route.rname}"></p>
+                            <br/>
+                            <p th:text="${route.routeIntroduce}"></p>
+                        </div>
+                        <div class="price">
+                            <p class="price_num">
+                                <span>&yen;</span>
+                                <span th:text="${route.price}"></span>
+                                <span>起</span>
+                            </p>
+                            <p><a  th:href="@{/route/findOne/(rid=${route.rid})}">查看详情</a></p>
+                        </div>
+                    </li>
+
+                </ul>
+
+                <div class="page_num_inf">
+                    <i></i> 共
+                    <span id="totalPage" th:text="${page.pages}">12</span>页<span id="totalCount" th:text="${page.total}">132</span>条
+                </div>
+                <div class="col-md-9">
+                    <ul  class="pagination">
+                        <li><a th:href="@{/route/findAll(start=0,cid=5)}">首 页</a></li>
+                        <li><a th:href="@{/route/findAll(start=${page.pageNum-1},cid=5)}">上一页</a></li>
+                        <!--遍历条数-->
+                        <li th:each="nav:${page.navigatepageNums}">
+                            <a th:href="@{/route/findAll(start=${nav},cid=5)}" th:text="${nav}" th:if="${nav != page.pageNum}"></a>
+                            <span style="font-weight: bold;background: #6faed9;" th:if="${nav == page.pageNum}" th:text="${nav}"></span>
+                        </li>
+                        <li><a th:href="@{/route/findAll(start=${page.pageNum+1},cid=5)}">下一页</a></li>
+                        <li><a th:href="@{/route/findAll(start=${page.pages},cid=5)}">尾 页</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+
+            <div class="right">
+                <div class="top">
+                    <div class="hot">HOT</div>
+                    <span>热门推荐</span>
+                </div>
+                <ul>
+                    <li>
+                        <div class="left"><img th:src="@{~/static/images/04-search_09.jpg}" alt=""></div>
+                        <div class="right">
+                            <p>清远新银盏温泉度假村酒店/自由行套...</p>
+                            <p>网付价<span>&yen;<span>899</span>起</span>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="left"><img th:src="@{~/static/images/04-search_09.jpg}"></div>
+                        <div class="right">
+                            <p>清远新银盏温泉度假村酒店/自由行套...</p>
+                            <p>网付价<span>&yen;<span>899</span>起</span>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="left"><img th:src="@{~/static/images/04-search_09.jpg}"></div>
+                        <div class="right">
+                            <p>清远新银盏温泉度假村酒店/自由行套...</p>
+                            <p>网付价<span>&yen;<span>899</span>起</span>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="left"><img th:src="@{~/static/images/04-search_09.jpg}"></div>
+                        <div class="right">
+                            <p>清远新银盏温泉度假村酒店/自由行套...</p>
+                            <p>网付价<span>&yen;<span>899</span>起</span>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="left"><img th:src="@{~/static/images/04-search_09.jpg}"></div>
+                        <div class="right">
+                            <p>清远新银盏温泉度假村酒店/自由行套...</p>
+                            <p>网付价<span>&yen;<span>899</span>起</span>
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+<div th:replace="footer :: footername"></div>
+<!--<div th:include="footer :: footername"></div>
+<script type="text/javascript" th:src="@{../static/js/include.js}"></script>-->
+
+</body>
+
+</html>

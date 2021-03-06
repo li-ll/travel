@@ -1,0 +1,50 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/travel?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+
+  thymeleaf:
+      mode: LEGACYHTML5
+      cache: false
+      encoding: UTF-8
+  #    prefix: classpath:/templates/
+#spring.thymeleaf.cache=falseapplication.yml:4url: jdbc:mysql://192.168.159.130:3306/pear-admin?serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=CONVERT_TO_NULL&autoReconnect=true&useSSL=false&failOverReadOnly=false
+    #          username: root
+    #          password: 7M*kfwmpk,tB
+mybatis:
+    mapper-locations: classpath:mapper/*.xml
+    type-aliases-package: com.ruo.travel_1.domain
+logging:  #日志
+  level:
+    com.ruo.travel_1.mapper: debug
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  pageSizeZero: false #pageSize=0
+
+#server:
+  #  port: 8080
+  #
+  #spring:
+  #  datasource:
+  #    username: root
+  #    password: 1234
+  #    url: jdbc:mysql://localhost:3306/springboot?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+  #    driver-class-name: com.mysql.jdbc.Driver
+  #
+  #mybatis:
+  #  mapper-locations: classpath:mapping/*Mapper.xml
+  #  type-aliases-package: com.example.entity
+  #
+  ##showSql
+  #logging:
+  #  level:
+  #    com:
+  #      example:
+  #        mapper : debug
+server:
+  port: 81

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script th:src="@{~/static/js/jquery-3.3.1.js}"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script th:src="@{~/static/js/bootstrap.js}"></script>
+    <link rel="stylesheet" th:href="@{~/static/css/bootstrap.min.css}"/>
+
+</head>
+<body>
+<a th:href="@{/user/findAll}">查询</a>
+
+<h1>用户列表</h1>
+<br/><br/>
+<div class="col-md-12">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>userName</th>
+            <th>passWord</th>
+
+        </tr>
+
+        <tr th:each="user : ${page.list}">
+            <th scope="row" th:text="${userStat.index + 1}">1</th>
+            <td th:text="${user.username}">neo</td>
+            <td th:text="${user.password}">Otto</td>
+        </tr>
+
+    </table>
+</div>
+<div  class="col-md-6">
+        <ul class="pagination">
+            <li><a th:href="@{/user/findAll(start=0)}">首 页</a></li>
+            <li><a th:href="@{/user/findAll(start=${page.pageNum-1})}">上一页</a></li>
+            <!--遍历条数-->
+            <li th:each="nav:${page.navigatepageNums}">
+                <a th:href="@{/user/findAll(start=${nav})}" th:text="${nav}" th:if="${nav != page.pageNum}"></a>
+                <span style="font-weight: bold;background: #6faed9;" th:if="${nav == page.pageNum}"
+                      th:text="${nav}"></span>
+            </li>
+            <li><a th:href="@{/user/findAll(start=${page.pageNum+1})}">下一页</a></li>
+            <li><a th:href="@{/user/findAll(start=${page.pages})}">尾 页</a></li>
+        </ul>
+</div>
+</body>
+</html>

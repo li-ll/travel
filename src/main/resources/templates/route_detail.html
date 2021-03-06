@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <title>路线详情</title>
+    <!-- <link rel="stylesheet" type="text/css" href="css/common.css">-->
+    <script th:src="@{~/static/js/bootstrap.js}"></script>
+    <link rel="stylesheet" th:href="@{~/static/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../static/css/common.css" th:href="@{/css/common.css}"><!--../static-->
+    <link rel="stylesheet" href="../static/css/search.css" th:href="@{/css/search.css}">
+    <link rel="stylesheet" href="../static/css/route-detail.css" th:href="@{/css/route-detail.css}">
+    <script th:src="@{~/static/js/jquery-3.3.1.js}"></script>
+    <script th:src="@{~/static/js/getParameter.js}"></script>
+<script>
+    $(function () {
+        // 发送请求，判断用户是否收藏过该线路
+        var rid = getParameter("rid");
+
+               $.get("/isFavorite",{rid:rid},function (data) {
+                     if("true"==data.flag){
+                         // 用户已经收藏过
+                         //<a  class="btn already" disabled="disabled">
+                         //设置收藏按钮的样式
+                         $("#favorite").addClass("already");
+                      //   $("#favorite").attr("disabled","disabled");
+                         //删除按钮的点击事件
+                      //   $("#favorite").removeAttr("onclick");
+                     }else{
+                         // 用户没有收藏
+                     }
+                 });
+
+    });
+
+    //点击收藏按钮触发的方法
+    function addFavorite(){
+        var rid = getParameter("rid");
+        //1. 判断用户是否登录
+        $.get("/user/findOne",{},function (user) {
+            if(user){
+                //用户登录了
+                //添加功能
+
+                //1.isFavoritite true 就可以remote,error,add
+
+                $.get("/isFavorite",{rid:rid},function (data) {
+                    if("true"==data.flag){
+                  /*      // 用户已经收藏过
+                        //<a  class="btn already" disabled="disabled">
+                        //设置收藏按钮的样式
+                        $("#favorite").addClass("already");
+                        //   $("#favorite").attr("disabled","disabled");
+                        //删除按钮的点击事件
+                        $("#favorite").removeAttr("onclick");*/
+                        $.get("/deleteFavorite",{rid:rid},function () {
+                            //代码刷新页面
+                            location.reload();
+                        });
+
+                    }else{
+                        // 用户没有收藏
+
+                        $.get("/addFavorite",{rid:rid},function () {
+                            //代码刷新页面
+                            location.reload();
+                        });
+
+                    }
+                });
+
+            }else{
+                //用户没有登录
+                alert("您尚未登录，请登录");
+                window.location.href="/rlogin"
+        }
+        })
+    }
+
+
+</script>
+</head>
+<body>
+<div th:include="header :: headname"></div>
+<div class="wrap">
+
+    <div class="bread_box">
+        <a href="/">首页</a>
+        <span> &gt;</span>
+        <a href="#">国内游</a><span> &gt;</span>
+        <a href="#" th:text="${route.rname}">全国-曼谷6-7天自由行 泰国出境旅游 特价往返机票自由行二次确认</a>
+    </div>
+
+
+    <div class="prosum_box">
+        <dl class="prosum_left">
+            <dt>
+                <img alt="" class="big_img" src="">
+            </dt>
+
+            <dd id="dd" >
+
+
+                <a class="down_img down_img_disable" style="margin-bottom: 0;">
+
+                    <a title="" class="little_img"  th:each="route:${route.routeImgList}">
+                        <img th:src="@{/}+${route.smallPic}" >
+                    </a>
+
+                </a>
+            </dd>
+
+        </dl>
+
+
+        <div class="prosum_right">
+                <p class="pros_title" id="rname" th:text="${route.rname}">【尾单特卖】全国-曼谷6-7天自由行 泰国出境旅游 特价往返机票自由行二次确认</p>
+            <p class="hot" id="routeIntroduce" th:text="${route.routeIntroduce}">1-2月出发，网付立享￥1099/2人起！爆款位置有限，抢完即止！</p>
+            <div class="pros_other">
+                <p>经营商家 ：<span id="sname" th:text="${route.seller.sname}">黑马国旅</span></p>
+                <p>咨询电话 : <span id="consphone" th:text="${route.seller.consphone}">400-618-9090</span></p>
+                <p>地址 ： <span id="address" th:text="${route.seller.address}">传智播客黑马程序员</span></p>
+            </div>
+            <div class="pros_price">
+                <p class="price"><strong id="price" th:text="'¥'+${route.price}"></strong><span>起</span></p>
+                <p class="collect">
+                    <a class="btn" id="favorite" onclick="addFavorite();"><i
+                            class="glyphicon glyphicon-heart-empty"></i>点击收藏</a>
+                    <!-- <a  class="btn already" disabled="disabled"><i class="glyphicon glyphicon-heart-empty"></i>点击收藏</a>-->
+                    <span id="favoriteCount" th:text="${route.count}">已收藏100次</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<div th:replace="footer :: footername"></div>
+</body>
+</html>

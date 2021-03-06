@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script th:src="@{~/static/js/bootstrap.js}"></script>
+    <link rel="stylesheet" th:href="@{~/static/css/bootstrap.min.css}"/>
+    <script th:src="@{~/static/js/jquery-3.3.1.js}"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+
+  
+</head>
+<body>
+
+
+
+<header id="header" th:fragment="headname">
+        <div class="top_banner">
+            <img th:src="@{~/static/images/top_banner.jpg}" alt="">
+        </div>
+        <div class="shortcut">
+            <!-- 未登录状态  -->
+            <div class="login_out">
+                <a th:href="@{/rlogin}" th:if="${session.user==null}">登录</a>
+                <a th:href="@{/re}">注册</a>
+            </div>
+            <!-- 登录状态  -->
+            <div class="login">
+            	
+           <!-- <span th:text="${session.user}!=null ? ${session.user.name}:${null}"></span>-->
+                <!--/*@thymesVar id="sessionScope" type=""*/-->
+                <span th:if="${session.user!=null}" th:text="${session.user.name}"></span><!--sessionScope.user.username-->
+           <!--  <&#45;&#45;   th:value="${session.user}!=null ? ${session.user.nickname}"&ndash;&gt;-->
+                <a th:href="@{/my}" class="collection">我的收藏</a>
+                <a th:href="@{/user/exit}" th:if="${session.user!=null}" >退出</a>
+            </div>
+        </div>
+        <div class="header_wrap">
+            <div class="topbar">
+                <div class="logo">
+                    <a href="/"><img th:src="@{~/static/images/logo.jpg}" alt=""></a>
+                </div>
+                <div class="search">
+                   <!-- <form id="search" action="#" th:action="@{/ruote/findByFuzzyQuery}">
+                        <input name="str" id="str" type="text" value="" placeholder="请输入路线名称" class="search_input" autocomplete="off">
+                        <button type="button" class="search-button" onclick="searchStr()">搜索</button>
+                    </form>-->
+                    <form name="search"  th:action="@{/route/findByFuzzyQuery}" >
+                            <!--/*@thymesVar id="str" type=""*/-->
+                            <input type="text" name="str" placeholder="请输入路线名称" class="search_input" th:value="${str}">
+                            <i onclick="document.forms['search'].submit()" class="search-button">搜索</i>
+
+                    </form>
+
+                </div>
+                <div class="hottel">
+                    <div class="hot_pic">
+                        <img th:src="@{~/static/images/hot_tel.jpg}" alt="">
+                    </div>
+                    <div class="hot_tel">
+                        <p class="hot_time">客服热线(9:00-6:00)</p>
+                        <p class="hot_num">400-618-9090</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="navitem">
+        <ul id="category" class="nav" name="category">
+            <li class="nav-active"><a th:href="@{/index}">首页</a></li>
+            <li><a th:href="@{/route/findAll/(cid=1)}">门票</a></li>
+            <li><a th:href="@{/route/findAll/(cid=2)}">酒店</a></li>
+            <li><a th:href="@{/route/findAll/(cid=3)}">香港车票</a></li>
+            <li><a th:href="@{/route/findAll/(cid=4)}">出境游</a></li>
+            <li><a th:href="@{/route/findAll/(cid=5)}">国内游</a></li>
+            <li><a th:href="@{/route/findAll/(cid=6)}">港澳游</a></li>
+            <li><a th:href="@{/route/findAll/(cid=7)}">抱团定制</a></li>
+            <li><a th:href="@{/route/findAll/(cid=8)}">全球自由行</a></li>
+            <li><a th:href="@{/route/findByCount}">收藏排行榜</a></li>
+        </ul>
+    </div>
+    </header>
+    <!-- 头部 end -->
+     <!-- 首页导航 -->
+
+</body>
+</html>

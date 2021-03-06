@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruo.travel_1.mapper.UserMapper"><!--namespace随意，一般为-->
+
+    <!-- <resultMap id="BaseResultMap" type="com.ruo.travel_1.domain.User">
+         <result column="uid"  property="uid" />
+         <result column="username"  property="username" />
+         <result column="password"  property="password" />
+         <result column="name"  property="name" />
+         <result column="birthday"  property="birthday" />
+         <result column="sex"  property="sex" />
+         <result column="telephone"  property="telephone" />
+         <result column="email"  property="email" />
+         <result column="status"  property="status" />
+         <result column="code"  property="code" />
+     </resultMap>-->
+    <!-- 定义主键 ,非常重要。如果是多个字段,则定义多个id -->
+    <!-- property：主键在pojo中的属性名 -->
+    <!-- column：主键在数据库中的列名 -->
+    <select id="findByUsername" resultType="com.ruo.travel_1.domain.User">
+       select * from tab_user where username = #{username}
+    </select>
+
+    <select id="findByUid" resultType="com.ruo.travel_1.domain.User">
+       select * from tab_user where uid = #{uid}
+    </select>
+    <select id="findAll" resultType="com.ruo.travel_1.domain.User">
+       select * from tab_user
+    </select>
+
+    <select id="findByCode" resultType="com.ruo.travel_1.domain.User">
+       select * from tab_user where code = #{code}
+    </select>
+    <select id="findByUsernameAndPassword" resultType="com.ruo.travel_1.domain.User">
+       select * from tab_user where username = #{username} and password = #{password}
+    </select>
+    <update id="updateStatus" parameterType="com.ruo.travel_1.domain.User">
+       update tab_user set status = 'Y' where uid=#{uid}
+    </update>
+
+    <insert id="save" parameterType="com.ruo.travel_1.domain.User">
+        insert into tab_user(username,password,name,birthday,sex,telephone,email,status,code)
+        values(#{username},#{password},#{name},#{birthday},#{sex},#{telephone},#{email},#{status},#{code})
+    </insert>
+
+</mapper>
